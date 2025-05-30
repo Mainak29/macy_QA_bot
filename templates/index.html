@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QA Bot</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f4f8;
+            color: #333;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 30px 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #4a90e2;
+            margin-bottom: 0.2em;
+            font-weight: 700;
+        }
+
+        p.intro {
+            color: #555;
+            margin-top: 0;
+            margin-bottom: 1.5em;
+            font-style: italic;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 1em;
+            font-weight: 600;
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 12px 15px;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #4a90e2;
+            outline: none;
+        }
+
+        button {
+            background-color: #4a90e2;
+            border: none;
+            padding: 12px 20px;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #357ABD;
+        }
+
+        .answer-section {
+            margin-top: 30px;
+            background: #eef6ff;
+            padding: 25px 40px;
+            border-left: 5px solid #4a90e2;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .answer-section h3 {
+            margin-top: 0;
+            color: #4a90e2;
+        }
+
+        .answer-section p {
+            margin-bottom: 0;
+            color: #222;
+            font-size: 1.2rem;
+        }
+        .chat-history {
+            margin-top: 2em;
+            width: 100%;
+            background: #fefefe;
+            padding: 1em;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+
+        .qa-pair {
+            margin-bottom: 1em;
+            padding: 0.5em;
+            background: #eef6ff;
+            border-left: 4px solid #4a90e2;
+            border-radius: 4px;
+        }
+
+        .qa-pair p {
+            margin: 0.2em 0;
+        }
+
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            form {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .answer-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="container">
+            <h1>Hi, I am Macy.</h1>
+            <p class="intro">I am your ChatBot. Mainak gifted me Intelligence, to answer your questions</p>
+            <h2>Tell me what's on your mind?</h2>
+            <form method="POST">
+                <input type="text" name="question" placeholder="Type your question" required />
+                <button type="submit">Ask</button>
+            </form>
+
+            <form method="POST" action="/clear" style="margin-top: 10px;">
+                <button type="submit">Clear Chat</button>
+            </form>
+        </div>
+
+        {% if chat_history %}
+        <div class="chat-history">
+            {% for item in chat_history %}
+            <div class="qa-pair">
+            <p><strong>You:</strong> {{ item.question }}</p>
+            <p><strong>Macy:</strong> {{ item.answer }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </main>
+</body>
+</html>
